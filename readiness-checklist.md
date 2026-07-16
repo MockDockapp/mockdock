@@ -22,6 +22,9 @@ Before installing or launching the MockDock app, run through this quick checklis
 *   [ ] **Privileged Port Binding (macOS)**
     *   Since MockDock intercepts HTTP/HTTPS requests on ports **80** and **443**, you must allow Docker to bind to privileged ports (< 1024).
     *   *Enable*: Open **Docker Desktop Settings (Gear Icon)** -> **General** (or **Advanced**) -> Check **"Allow privileged port binding (ports < 1024)"** or **"Use virtualisation framework"**. Enter your Mac password when prompted.
+*   [ ] **Default Docker Socket Symlink (macOS)**
+    *   MockDock (running inside its container) needs access to the host's Docker socket to communicate with Docker Desktop and spin up Ghost Mode stubs.
+    *   *Enable*: Open **Docker Desktop Settings (Gear Icon)** -> **Advanced** -> Check **"Allow the default Docker socket to be used"** (this creates the `/var/run/docker.sock` symlink and may prompt for your Mac password).
 *   [ ] **Clean Container Namespace**
     *   Ensure there are no existing or stale container instances named `mockdock`.
     *   *Check*: Run `docker rm -f mockdock` in your terminal to clear any remnants before running the installer.
