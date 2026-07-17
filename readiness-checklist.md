@@ -37,3 +37,39 @@ Before installing or launching the MockDock app, run through this quick checklis
     *   MockDock mounts your `~/Documents` directory to read and hot-reload your compose profiles. You must grant Docker permission to access this folder.
     *   *Enable*: Open **System Settings** -> **Privacy & Security** -> **Files and Folders** (or **Full Disk Access**) -> Toggle the switch for **Docker** to **ON**.
     *   *Restart*: Restart Docker Desktop after making this change.
+
+---
+
+## 📂 4. MockDock Directory Footprint
+
+MockDock creates and works with specific directories and files during its operation:
+*   **Global Configuration Cache (`~/.mockdock/`)**:
+    *   Located in your user home directory.
+    *   Contains the `global-config.json` registry of project universes, your CA certificates (`ca.crt` / `ca.key`), and local stubs catalog cache.
+*   **Local Project Workspace Config (`[project-root]/mockdock/`)**:
+    *   Created in each project folder when running `mockdock init`.
+    *   Stores cached compose files (`source-compose.yaml`, `mocked-compose.yaml`), dynamic sources registry (`sources.json`), active stubs state (`active_stubs.json`), and custom Javascript mock files.
+*   **CLI Binary Command (`/usr/local/bin/mockdock`)**:
+    *   Registered globally in your OS command path to run MockDock CLI helper commands.
+*   **Docker Daemon Container**:
+    *   A container named `mockdock` running locally in the background.
+
+---
+
+## 🧹 5. How to Fully Remove MockDock
+
+To completely uninstall MockDock and purge all local configuration footprints from your machine, run these commands in your terminal:
+
+```bash
+# 1. Stop and remove the background daemon container
+docker rm -f mockdock
+
+# 2. Delete the global configuration and certificate cache directory
+rm -rf ~/.mockdock
+
+# 3. Delete the globally registered CLI helper binary
+sudo rm -f /usr/local/bin/mockdock
+
+# 4. (Optional) Remove local MockDock configuration in specific project folders
+rm -rf /path/to/your/project/mockdock
+```
