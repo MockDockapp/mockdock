@@ -73,3 +73,22 @@ sudo rm -f /usr/local/bin/mockdock
 # 4. (Optional) Remove local MockDock configuration in specific project folders
 rm -rf /path/to/your/project/mockdock
 ```
+
+---
+
+## 📦 6. Running Stacks Without Local Source Code (Ghost Mode)
+
+When initializing MockDock in a folder that contains a `docker-compose.yml` file but **lacks** the actual application source code directories (for example, when testing docker-compose recipes from repositories like *awesome-compose*):
+
+1. **Understand Build Failures**:
+   * If a service defines a `build:` property (such as `build: ./frontend` or `build: .`), Docker Compose expects to find the `Dockerfile` and the build folder locally on your disk.
+   * If those directories are missing, starting the stack will fail with a command error (such as **exit status 17** or `unable to prepare context`).
+
+2. **How to Bypass Using Ghost Mode**:
+   * Open the MockDock Web Dashboard at `http://localhost:11800`.
+   * Navigate to your active Universe workspace.
+   * In the services list table, locate any service that uses a local build path (indicated by a `build:` key in the original compose file).
+   * Toggle that service's mode from **Real** to **Ghost** (mocked).
+   * **What MockDock Does**: When a service is in Ghost mode, MockDock's compiler automatically strips the `build` property from the overrides and swaps the container image with the pre-built `ghcr.io/mockdockapp/mockdock` mock mockup image.
+   * Toggle the stack **ON** or click **Rebuild Stack**. Docker Compose will now start the container instantly without attempting to build any local code!
+
