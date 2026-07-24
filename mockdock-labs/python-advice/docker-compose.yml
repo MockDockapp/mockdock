@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  web:
+    build: .
+    container_name: python-advice-web
+    ports:
+      - "8000:8000"
+    environment:
+      - OPENAI_API_KEY=sk-mockdock-openai-sandbox-key-1234
+      # EDUCATIONAL NOTE: In Python, standard network requests libraries (like requests, httpx, urllib3)
+      # use separate CA bundles. We map these environment variables to inject the MockDock CA.
+      - REQUESTS_CA_BUNDLE=/etc/ssl/certs/mockdock-ca.pem
+      - SSL_CERT_FILE=/etc/ssl/certs/mockdock-ca.pem
+    volumes:
+      - ~/.mockdock/ca.crt:/etc/ssl/certs/mockdock-ca.pem:ro

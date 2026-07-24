@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: go-fans-db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=gofans
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7-alpine
+    container_name: go-fans-redis
+    ports:
+      - "6379:6379"
+
+  web:
+    build: .
+    container_name: go-fans-web
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_URL=postgres://postgres:postgres@db:5432/gofans
+      - REDIS_URL=redis:6379
+      - PORT=8080
+    volumes:
+      # Mount MockDock Root CA to the container OS trusted certificate store
+      - ~/.mockdock/ca.crt:/usr/local/share/ca-certificates/mockdock-ca.crt:ro
+    depends_on:
+      - db
+      - redis

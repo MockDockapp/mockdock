@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  web:
+    build: .
+    container_name: payment-portal-web
+    ports:
+      - "3001:3001"
+    environment:
+      - STRIPE_SECRET_KEY=sk_test_mockdock12345
+      - PORT=3001
+      # EDUCATIONAL NOTE: In Docker container environments, mapping the CA root certificate
+      # using environment variables tells Node's trust store to trust the MockDock CA.
+      - NODE_EXTRA_CA_CERTS=/etc/ssl/certs/mockdock-ca.pem
+    volumes:
+      # Mount the MockDock global CA cert from home directory
+      # This allows MockDock's dynamic SNI hijacker to intercept SSL traffic transparently.
+      - ~/.mockdock/ca.crt:/etc/ssl/certs/mockdock-ca.pem:ro

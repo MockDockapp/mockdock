@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  mongodb:
+    image: mongo:5.0
+    container_name: mern-mongodb
+    ports:
+      - "27017:27017"
+
+  web:
+    build: .
+    container_name: mern-todo-web
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/todos
+      - PORT=3000
+    depends_on:
+      - mongodb
