@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 🙋 MockDock Support & Questions
+    url: https://github.com/MockDockapp/mockdock/discussions/categories/support
+    about: Ask support questions about container proxy configs, SSL trust stores, and network settings.
+  - name: ✨ Share your stubs or showcases
+    url: https://github.com/MockDockapp/mockdock/discussions/categories/showcase
+    about: Show off custom GOJA VM mock stubs or unique developer sandboxes!
+  - name: 📚 Lessons & Target Labs feedback
+    url: https://github.com/MockDockapp/mockdock/discussions/categories/lessons
+    about: Share custom learning worksheets or ask questions about lesson plans.
